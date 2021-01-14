@@ -1,5 +1,6 @@
 package com.udacity.vehicles.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -7,6 +8,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -81,12 +83,13 @@ public class CarControllerTest {
     public void createCar() throws Exception {
         Car car = getCar();
         car = carService.save(car);
-        mvc.perform(
-                post(new URI("/cars"))
-                        .content(json.write(car).getJson())
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isCreated());
+        ResultActions result = mvc.perform(
+            post(new URI("/cars"))
+                .content(json.write(car).getJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isCreated())
+            .andExpect(content().json("{\"id\":1,\"createdAt\":null,\"modifiedAt\":null,\"condition\":\"USED\",\"details\":{\"body\":\"sedan\",\"model\":\"Impala\",\"manufacturer\":{\"code\":101,\"name\":\"Chevrolet\"},\"numberOfDoors\":4,\"fuelType\":\"Gasoline\",\"engine\":\"3.6L V6\",\"mileage\":32280,\"modelYear\":2018,\"productionYear\":2018,\"externalColor\":\"white\"},\"location\":{\"lat\":40.73061,\"lon\":-73.935242,\"address\":null,\"city\":null,\"state\":null,\"zip\":null},\"price\":null,\"_links\":{\"self\":{\"href\":\"http://localhost/cars/1\"},\"cars\":{\"href\":\"http://localhost/cars\"}}}"));
     }
 
     /**
@@ -123,9 +126,30 @@ public class CarControllerTest {
     public void deleteCar() throws Exception {
         Car car = getCar();
         car = carService.save(car);
-        ResultActions blah = mvc.perform(
+        mvc.perform(
             delete(("/cars/{id}"), car.getId()))
             .andExpect(status().is2xxSuccessful());
+    }
+
+    /**
+     * Tests thata single car can be updated by ID.
+     * @throws Exception if the delete operation of a vehicle fails
+     */
+    @Test
+    public void updateCar() throws Exception {
+        Car car = getCar();
+        car = carService.save(car);
+        Details details = car.getDetails();
+        details.setModel("Ford");
+        car.setDetails(details);
+        ResultActions result = mvc.perform(
+            put(("/cars/{id}"), car.getId())
+                .content(json.write(car).getJson())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().is2xxSuccessful());
+
+        assertThat(result.andReturn().getResponse().getContentAsString()).contains("Ford");
     }
 
     /**

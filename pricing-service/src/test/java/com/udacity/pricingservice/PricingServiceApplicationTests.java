@@ -1,8 +1,10 @@
 package com.udacity.pricingservice;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.not;
 
 import com.udacity.pricingservice.entity.Price;
 import org.junit.Test;
@@ -35,10 +37,10 @@ public class PricingServiceApplicationTests {
 
     @Test
     public void getAllPrices() {
-
         ResponseEntity<Price> response = restTemplate
-            .exchange("http://localhost:" + port + "/prices", HttpMethod.GET, null, Price.class);
+            .exchange("http://localhost:" + port + "services/price?vehicleId=1", HttpMethod.GET, null, Price.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(response.getBody(), is(notNullValue()));
     }
 }
