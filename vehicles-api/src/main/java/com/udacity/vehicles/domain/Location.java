@@ -19,16 +19,12 @@ public class Location {
     @NotNull
     private Double lon;
 
-    @Transient
     private String address;
 
-    @Transient
     private String city;
 
-    @Transient
     private String state;
 
-    @Transient
     private String zip;
 
     public Location() {

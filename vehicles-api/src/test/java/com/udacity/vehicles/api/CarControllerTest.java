@@ -33,6 +33,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 /**
  * Implements testing of the CarController class.
@@ -96,7 +97,10 @@ public class CarControllerTest {
          *   the whole list of vehicles. This should utilize the car from `getCar()`
          *   below (the vehicle will be the first in the list).
          */
-
+        Car car = getCar();
+        mvc.perform(
+            get(new URI("/cars")))
+            .andExpect(content().toString().contains("lkj"));
     }
 
     /**
