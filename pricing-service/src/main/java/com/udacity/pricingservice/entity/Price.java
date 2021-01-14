@@ -1,6 +1,8 @@
 package com.udacity.pricingservice.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
@@ -15,6 +17,7 @@ public class Price {
     private BigDecimal price;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long vehicleId;
 
     public Price() {
