@@ -1,5 +1,6 @@
 package com.udacity.vehicles.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -14,9 +15,13 @@ import javax.validation.constraints.NotNull;
 public class Location {
 
     @NotNull
+    @Schema(description = "Location latitude.",
+        example = "37.3999133", required = true)
     private Double lat;
 
     @NotNull
+    @Schema(description = "Location longitude.",
+        example = "-122.1105521", required = true)
     private Double lon;
 
     private String address;

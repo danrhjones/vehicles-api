@@ -1,5 +1,6 @@
 package com.udacity.vehicles.domain.manufacturer;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -10,7 +11,11 @@ import javax.persistence.Id;
 public class Manufacturer {
 
     @Id
+    @Schema(description = "Manufacturer code.",
+        example = "101", required = true)
     private Integer code;
+    @Schema(description = "Manufacturer name.",
+        example = "Chevrolet", required = true)
     private String name;
 
     public Manufacturer() { }

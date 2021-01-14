@@ -86,7 +86,7 @@ public class CarService {
      * @return the new/updated car is stored in the repository
      */
     public Car save(Car car) {
-        if (car.getId() != null) {
+        if (car.getId() != null && car.getId() != 0) {
             return repository.findById(car.getId())
                     .map(carToBeUpdated -> {
                         carToBeUpdated.setCondition(car.getCondition());

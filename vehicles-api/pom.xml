@@ -46,41 +46,40 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
             <version>3.3.2</version>
         </dependency>
-
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
             <version>2.3.2</version>
             <type>pom</type>
         </dependency>
-
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>2.3.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.4.6</version>
         </dependency>
     </dependencies>
 
@@ -107,9 +106,7 @@
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
-                        <goals>
-                            <goal>wsdl2java</goal>
-                        </goals>
+
                     </execution>
                 </executions>
             </plugin>
